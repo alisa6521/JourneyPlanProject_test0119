@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patricia & Jean 東京之旅 2026</title>
+    <!-- 引入 Tailwind CSS 進行美化 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入 FontAwesome 圖示 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #f3f4f6;
+            padding-bottom: 80px; /* 避免內容被底部遮住 */
+        }
+        .timeline-line {
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: #e5e7eb;
+            z-index: 0;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        /* 卡片特效 */
+        .card {
+            transition: transform 0.2s;
+        }
+        .card:active {
+            transform: scale(0.98);
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        flight: '#3b82f6', // 藍色 - 航班
+                        food: '#f59e0b',   // 橘色 - 食物
+                        event: '#ec4899',  // 粉色 - 活動/演唱會
+                        hotel: '#6366f1',  // 紫色 - 飯店
+                        disney: '#8b5cf6', // 迪士尼專用
+                        place: '#10b981',  // 綠色 - 景點
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="text-gray-800">
+
+    <!-- 頂部標題區 -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-md mx-auto px-4 py-4 flex justify-between items-center bg-white">
+            <div>
+                <h1 class="text-xl font-bold text-gray-900">🇯🇵 東京之旅 2026</h1>
+                <p class="text-xs text-gray-500">Patricia & Jean (2人)</p>
+            </div>
+            <div class="text-right">
+                <span class="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded-full">1/29 - 2/6</span>
+            </div>
+        </div>
+        
+        <!-- 日期導航 -->
+        <nav class="max-w-md mx-auto border-t border-gray-100">
+            <div class="flex overflow-x-auto py-3 px-2 hide-scrollbar space-x-2 bg-white" id="dateNav">
+                <!-- Javascript will handle active state visually, simple anchors here -->
+                <a href="#day1" class="flex-shrink-0 px-4 py-1.5 bg-gray-100 rounded-full text-sm font-medium hover:bg-gray-200 focus:bg-gray-800 focus:text-white transition snap-center">1/29</a>
+                <a href="#day2" class="flex-shrink-0 px-4 py-1.5 bg-gray-100 rounded-full text-sm font-medium hover:bg-gray-200 focus:bg-gray-800 focus:text-white transition snap-center">1/30</a>
+                <a href="#day3" class="flex-shrink-0 px-4 py-1.5 bg-gray-100 rounded-full text-sm font-medium hover:bg-gray-200 focus:bg-gray-800 focus:text-white transition snap-center">1/31</a>
+                <a href="#day4" class="flex-shrink-0 px-4 py-1.5 bg-gray-100 rounded-full text-sm font-medium hover:bg-gray-200 focus:bg-gray-800 focus:text-white transition snap-center">2/1</a>
+                <a href="#day5" class="flex-shrink-0 px-4 py-1.5 bg-gray-100 rounded-full text-sm font-medium hover:bg-gray-200 focus:bg-gray-800 focus:text-white transition snap-center">2/2</a>
+                <a href="#day6" class="flex-shrink-0 px-4 py-1.5 bg-gray-100 rounded-full text-sm font-medium hover:bg-gray-200 focus:bg-gray-800 focus:text-white transition snap-center">2/3</a>
+                <a href="#day9" class="flex-shrink-0 px-4 py-1.5 bg-gray-100 rounded-full text-sm font-medium hover:bg-gray-200 focus:bg-gray-800 focus:text-white transition snap-center">回程</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="max-w-md mx-auto px-4 py-4 relative">
+        <div class="timeline-line"></div>
+
+        <!-- DAY 1 -->
+        <div id="day1" class="relative pl-8 pb-8 scroll-mt-32">
+            <div class="absolute left-0 w-10 h-10 bg-white border-2 border-gray-300 rounded-full flex items-center justify-center font-bold text-xs shadow-sm z-10">
+                1/29
+            </div>
+            <h2 class="text-lg font-bold text-gray-800 mb-4 pt-2">Day 1: 抵達東京</h2>
+
+            <!-- Flight Card -->
+            <div class="card bg-white rounded-xl shadow-sm p-4 mb-4 border-l-4 border-flight relative overflow-hidden">
+                <div class="flex justify-between items-start">
+                    <div class="flex items-center gap-2 mb-2">
+                        <i class="fas fa-plane-arrival text-flight"></i>
+                        <span class="font-bold text-flight">JL044 (阿甄)</span>
+                    </div>
+                    <span class="text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded">T3</span>
+                </div>
+                <div class="flex justify-between items-center text-sm">
+                    <div>
+                        <p class="text-gray-500 text-xs">倫敦 LHR</p>
+                        <p class="font-mono">18:30 (1/28)</p>
+                    </div>
+                    <div class="text-gray-300">➜</div>
+                    <div class="text-right">
+                        <p class="text-gray-500 text-xs">東京 HND</p>
+                        <p class="font-mono font-bold text-lg">17:20</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hotel Card -->
+            <div class="card bg-white rounded-xl shadow-sm p-4 mb-4 border-l-4 border-hotel">
+                <div class="flex items-center gap-2 mb-2">
+                    <i class="fas fa-hotel text-hotel"></i>
+                    <h3 class="font-bold text-gray-800">HAMACHO HOTEL</h3>
+                </div>
+                <p class="text-sm text-gray-600 mb-2">阿甄先 Check-in</p>
+                <div class="bg-gray-50 p-2 rounded text-xs text-gray-500">
+                    <i class="fas fa-user-circle mr-1"></i> 訂位人: Patricia
+                </div>
+                <a href="https://www.google.com/maps/search/?api=1&query=HAMACHO+HOTEL+TOKYO" target="_blank" class="block mt-2 text-center text-hotel text-sm font-medium border border-hotel rounded py-1 hover:bg-indigo-50">
+                    開啟地圖
+                </a>
+            </div>
+
+            <!-- Friend Arrival -->
+            <div class="card bg-white rounded-xl shadow-sm p-4 mb-4 border-l-4 border-gray-500">
+                <div class="flex justify-between">
+                    <h3 class="font-bold text-gray-800">翠莎抵達</h3>
+                    <span class="text-sm font-mono bg-gray-100 px-2 rounded">~23:50</span>
+                </div>
+                <p class="text-sm text-gray-600 mt-1">搭末班車到東京 (社團活動結束)</p>
+            </div>
+        </div>
+
+        <!-- DAY 2 -->
+        <div id="day2" class="relative pl-8 pb-8 scroll-mt-32">
+            <div class="absolute left-0 w-10 h-10 bg-white border-2 border-gray-300 rounded-full flex items-center justify-center font-bold text-xs shadow-sm z-10">
+                1/30
+            </div>
+            <h2 class="text-lg font-bold text-gray-800 mb-4 pt-2">Day 2: 牛排 & Lady Gaga</h2>
+
+            <!-- Lunch -->
+            <div class="card bg-white rounded-xl shadow-sm p-4 mb-4 border-l-4 border-food">
+                <div class="flex justify-between items-start mb-2">
+                    <h3 class="font-bold text-gray-800 flex items-center gap-2">
+                        <i class="fas fa-utensils text-food"></i> Peter Luger
+                    </h3>
+                    <span class="text-xl font-bold text-food">13:30</span>
+                </div>
+                <div class="bg-orange-50 p-3 rounded-lg mb-2">
+                    <p class="text-xs text-gray-500 uppercase">Reservation No.</p>
+                    <p class="text-lg font-mono font-bold text-gray-800 tracking-wider">7LS7SSUANK</p>
+                </div>
+                <p class="text-sm text-gray-600 mb-2"><i class="fas fa-map-marker-alt mr-1"></i> 惠比壽站 431m</p>
+                <a href="https://www.google.com/maps/search/?api=1&query=Peter+Luger+Steak+House+Tokyo" target="_blank" class="text-sm text-food font-medium">查看地圖 ></a>
+            </div>
+
+            <!-- Event -->
+            <div class="card bg-white rounded-xl shadow-sm p-4 mb-4 border-l-4 border-event bg-gradient-to-r from-white to-pink-50">
+                <div class="flex items-center gap-2 mb-2">
+                    <i class="fas fa-microphone-lines text-event"></i>
+                    <h3 class="font-bold text-gray-800">Lady Gaga 演唱會</h3>
+                </div>
+                <div class="space-y-2 text-sm">
+                    <div class="flex items-center">
+                        <span class="w-16 text-gray-500 text-xs">18:00</span>
+                        <span>抵達東京巨蛋 (Tokyo Dome)</span>
+                    </div>
+                    <div class="flex items-center font-bold text-event">
+                        <span class="w-16 text-xs">19:00</span>
+                        <span>開演 🎵</span>
+                    </div>
+                </div>
+            </div>
+            
+             <!-- Hotel -->
+             <div class="flex items-center gap-2 text-xs text-gray-400 mt-2">
+                <i class="fas fa-bed"></i> 宿: HAMACHO HOTEL
+            </div>
+        </div>
+
+        <!-- DAY 3 -->
+        <div id="day3" class="relative pl-8 pb-8 scroll-mt-32">
+            <div class="absolute left-0 w-10 h-10 bg-white border-2 border-gray-300 rounded-full flex items-center justify-center font-bold text-xs shadow-sm z-10">
+                1/31
+            </div>
+            <h2 class="text-lg font-bold text-gray-800 mb-4 pt-2">Day 3: 吉祥寺與拉麵</h2>
+
+            <!-- Lunch -->
+            <div class="card bg-white rounded-xl shadow-sm p-4 mb-4 border-l-4 border-food">
+                <div class="flex justify-between mb-1">
+                    <h3 class="font-bold text-gray-800">Ramen 翡翠</h3>
+                    <span class="text-sm font-bold text-food">11:30</span>
+                </div>
+                <p class="text-xs text-gray-500 mb-2">東京都港区赤坂3-14-2 ドルミ赤坂 2F</p>
+                <a href="https://www.google.com/maps/search/?api=1&query=Ramen+翡翠+赤坂" target="_blank" class="text-xs bg-gray-100 px-2 py-1 rounded text-gray-600">導航</a>
+            </div>
+
+            <!-- Activity -->
+            <div class="card bg-white rounded-xl shadow-sm p-4 mb-4 border-l-4 border-place">
+                <h3 class="font-bold text-gray-800 mb-2">澀谷 & 古著店</h3>
+                <p class="text-sm text-gray-600">去吉祥寺前，先去澀谷晃晃。</p>
+            </div>
+
+            <!-- Ghibli -->
+            <div class="card bg-white rounded-xl shadow-sm p-4 mb-4 border-l-4 border-green-600">
+                <div class="flex justify-between items-center mb-2">
+                    <h3 class="font-bold text-gray-800"><i class="fas fa-tree text-green-600 mr-1"></i> 吉卜力美術館</h3>
+                    <span class="bg-green-100 text-green-800 text-xs font-bold px-2 py-1 rounded">15:00</span>
+                </div>
+                <p class="text-sm text-gray-600">吉祥寺周邊古著店、井之頭公園。</p>
+            </div>
+
+            <!-- Dinner Plan -->
+            <div class="card bg-white rounded-xl shadow-sm p-4 mb-4 border-l-4 border-gray-400 border-dashed">
+                <h3 class="font-bold text-gray-600 text-sm">晚餐計畫 (~17:00後)</h3>
+                <p class="text-sm text-gray-500 mt-1">在吉祥寺吃飯 OR 移動到其他地方。</p>
+            </div>
+        </div>
+
+        <!-- DAY 4 -->
+        <div id="day4" class="relative pl-8 pb-8 scroll-mt-32">
+            <div class="absolute left-0 w-10 h-10 bg-white border-2 border-gray-300 rounded-full flex items-center justify-center font-bold text-xs shadow-sm z-10">
+                2/1
+            </div>
+            <h2 class="text-lg font-bold text-gray-800 mb-4 pt-2">Day 4: DisneySea</h2>
+
+            <div class="card bg-white rounded-xl shadow-sm p-0 mb-4 overflow-hidden border-2 border-disney">
+                <div class="bg-disney text-white p-4 text-center">
+                    <i class="fas fa-crown text-2xl mb-2"></i>
+                    <h3 class="font-bold text-xl">DisneySea</h3>
+                    <p class="text-sm opacity-90">全日夢幻行程</p>
+                </div>
+                <div class="p-4">
+                    <p class="text-sm text-gray-600 text-center">記得確認遊行時間與購買 DPA。</p>
+                </div>
+            </div>
+             <!-- Hotel -->
+             <div class="flex items-center gap-2 text-xs text-gray-400 mt-2">
+                <i class="fas fa-bed"></i> 宿: HAMACHO HOTEL (最後一晚)
+            </div>
+        </div>
+
+        <!-- DAY 5 -->
+        <div id="day5" class="relative pl-8 pb-8 scroll-mt-32">
+            <div class="absolute left-0 w-10 h-10 bg-white border-2 border-gray-300 rounded-full flex items-center justify-center font-bold text-xs shadow-sm z-10">
+                2/2
+            </div>
+            <h2 class="text-lg font-bold text-gray-800 mb-4 pt-2">Day 5: 移動日</h2>
+
+            <!-- Food -->
+            <div class="card bg-white rounded-xl shadow-sm p-4 mb-4 border-l-4 border-food">
+                <h3 class="font-bold text-gray-800">早午餐: らぁ麺や 嶋</h3>
+                <p class="text-xs text-gray-500 mt-1">新宿人氣拉麵，建議提早排隊。</p>
+                <a href="https://www.google.com/maps/search/?api=1&query=らぁ麺や+嶋" target="_blank" class="text-xs text-food mt-2 block">地圖 ></a>
+            </div>
+
+            <!-- Hotel Change -->
+            <div class="card bg-indigo-50 rounded-xl shadow-sm p-4 mb-4 border border-indigo-200">
+                <div class="flex items-center gap-2 mb-2 text-indigo-800">
+                    <i class="fas fa-suitcase-rolling"></i>
+                    <h3 class="font-bold">移動至橫濱</h3>
+                </div>
+                <div class="bg-white p-3 rounded border border-indigo-100">
+                    <p class="text-xs text-gray-400 mb-1">Check-in</p>
+                    <p class="font-bold text-gray-800">Hilton Yokohama</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- DAY 6 -->
+        <div id="day6" class="relative pl-8 pb-8 scroll-mt-32">
+            <div class="absolute left-0 w-10 h-10 bg-white border-2 border-gray-300 rounded-full flex items-center justify-center font-bold text-xs shadow-sm z-10">
+                2/3
+            </div>
+            <h2 class="text-lg font-bold text-gray-800 mb-4 pt-2">Day 6: 橫濱探索</h2>
+            
+            <div class="card bg-white rounded-xl shadow-sm p-4 mb-4 border-l-4 border-place">
+                <h3 class="font-bold text-gray-800">橫濱一日遊</h3>
+                <ul class="list-disc list-inside text-sm text-gray-600 mt-2 space-y-1">
+                    <li>紅磚倉庫</li>
+                    <li>中華街</li>
+                    <li>鋼彈工廠 (視開放狀況)</li>
+                    <li>港未來夜景</li>
+                </ul>
+            </div>
+            <div class="flex items-center gap-2 text-xs text-gray-400 mt-2">
+                <i class="fas fa-bed"></i> 宿: Hilton Yokohama
+            </div>
+        </div>
+        
+        <!-- DAY 7-8 Placeholder -->
+        <div class="relative pl-8 pb-8">
+             <div class="absolute left-0 w-10 h-10 bg-gray-100 border-2 border-gray-300 rounded-full flex items-center justify-center font-bold text-xs shadow-sm z-10 text-gray-400">
+                ...
+            </div>
+            <h2 class="text-lg text-gray-500 mb-4 pt-2">2/4 - 2/5: 橫濱/自由活動</h2>
+            <p class="text-sm text-gray-400">享受 Hilton 設施或周邊漫遊。</p>
+        </div>
+
+        <!-- DAY 9 -->
+        <div id="day9" class="relative pl-8 pb-8 scroll-mt-32">
+            <div class="absolute left-0 w-10 h-10 bg-white border-2 border-gray-300 rounded-full flex items-center justify-center font-bold text-xs shadow-sm z-10">
+                2/6
+            </div>
+            <h2 class="text-lg font-bold text-gray-800 mb-4 pt-2">Day 9: 回家囉</h2>
+
+            <!-- Flight Back -->
+            <div class="card bg-white rounded-xl shadow-sm p-4 mb-4 border-l-4 border-flight">
+                <div class="flex items-center gap-2 mb-2">
+                    <i class="fas fa-plane-departure text-flight"></i>
+                    <span class="font-bold text-flight">JL7121 (BA營運?)</span>
+                </div>
+                <div class="flex justify-between items-center text-sm">
+                    <div>
+                        <p class="text-gray-500 text-xs">東京 HND</p>
+                        <p class="font-mono font-bold text-lg">13:15</p>
+                    </div>
+                    <div class="text-gray-300">➜</div>
+                    <div class="text-right">
+                        <p class="text-gray-500 text-xs">倫敦 LHR</p>
+                        <p class="font-mono text-lg">19:10</p>
+                    </div>
+                </div>
+                <div class="mt-2 text-xs text-gray-400 bg-gray-50 p-2 rounded">
+                    3 客運大樓 (T3)
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 底部固定按鈕 (例如緊急資訊或地圖總覽，此處留空或可做快速回到頂部) -->
+    <div class="fixed bottom-4 right-4 z-50">
+        <a href="#" class="bg-gray-800 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:bg-black transition">
+            <i class="fas fa-arrow-up"></i>
+        </a>
+    </div>
+
+</body>
+</html>
