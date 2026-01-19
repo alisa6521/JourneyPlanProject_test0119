@@ -140,8 +140,10 @@
                     <a href="https://maps.app.goo.gl/example" target="_blank"
                         class="text-xs text-hotel mt-2 block font-bold">開啟地圖</a>
                 </div>
-                <div class="bg-white rounded-xl shadow-sm p-4 border-l-4 border-gray-500 mobile-card">
-                    <h3 class="font-bold">翠莎抵達</h3>
+                <div class="bg-white rounded-xl shadow-sm p-4 mb-4 border-l-4 border-gray-500 mobile-card">
+                    <div class="flex justify-between">
+                        <h3 class="font-bold">翠莎抵達</h3> <span class="border-gray-500 font-bold">23:50</span>
+                    </div>
                     <p class="text-sm text-gray-500">~23:50 (搭末班車)</p>
                 </div>
             </div>
@@ -159,7 +161,8 @@
                     <p class="text-xs text-gray-500 mt-1">預約號: 7LS******</p>
                     <p class="text-xs text-gray-400">惠比壽站 431m</p>
                 </div>
-                <div class="bg-gradient-to-r from-white to-pink-50 rounded-xl shadow-sm p-4 border-l-4 border-event mobile-card">
+                <div
+                    class="bg-gradient-to-r from-white to-pink-50 rounded-xl shadow-sm p-4 border-l-4 border-event mobile-card">
                     <div class="flex justify-between">
                         <h3 class="font-bold text-event">Lady Gaga 演唱會</h3>
                         <span class="text-event font-bold">18:00</span>
@@ -296,14 +299,24 @@
                 </div>
                 <div class="space-y-3 flex-grow">
                     <div class="bg-blue-50 p-3 rounded-lg border-l-4 border-flight">
-                        <div class="flex justify-between text-sm mb-1"><span class="font-bold text-flight">阿甄日本飛機</span>
-                            <span class="text-xs bg-white px-1 rounded">T3</span>
+                        <div class="flex justify-between text-sm mb-1"><span class="font-bold text-flight">阿珍日本飛機</span>
+                            <span class="text-xs bg-white px-1 rounded">T3 ➔ T3</span>
                         </div>
-                        <div class="text-sm">18:30 LHR ➔ <b>17:20 HND</b></div>
+                        <div class="flex justify-between items-center mt-2">
+                            <div class="text-center">
+                                <div class="text-xs text-gray-500">LHR</div>
+                                <div class="font-bold">18:30</div>
+                            </div>
+                            <i class="fas fa-arrow-right text-gray-300"></i>
+                            <div class="text-center">
+                                <div class="text-xs text-gray-500">HND</div>
+                                <div class="font-bold">17:20</div>
+                            </div>
+                        </div>
                     </div>
                     <div class="bg-indigo-50 p-3 rounded-lg border-l-4 border-hotel">
                         <div class="font-bold text-indigo-900 text-sm"><i class="fas fa-hotel"></i> HAMACHO HOTEL</div>
-                        <div class="text-xs text-indigo-700 mt-1">訂位: Patricia</div>
+                        <div class="text-xs text-indigo-700 mt-1">訂位: Patricia / 阿甄先Check in</div>
                     </div>
                     <div class="p-3 border rounded-lg border-dashed border-gray-300">
                         <div class="font-bold text-sm">翠莎抵達</div>
@@ -447,6 +460,7 @@
                 </div>
                 <div class="bg-blue-50 p-3 rounded-lg border-l-4 border-flight">
                     <div class="flex justify-between text-sm mb-1"><span class="font-bold text-flight">阿珍英國飛機</span>
+                        <span class="text-xs bg-white px-1 rounded">T3 ➔ T5</span>
                     </div>
                     <div class="flex justify-between items-center mt-2">
                         <div class="text-center">
