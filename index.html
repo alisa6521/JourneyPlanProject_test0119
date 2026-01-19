@@ -7,485 +7,671 @@
     <title>Patricia & Jean 東京之旅 2026</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>
         body {
-            font-family: 'Noto Sans TC', sans-serif;
+            font-family: 'Poppins', 'Noto Sans TC', sans-serif;
+            background-color: #f8fafc;
+            background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+            background-size: 20px 20px;
         }
 
-        /* 手機版專用 CSS */
+        .glass {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-card {
+            animation: fadeInUp 0.6s ease-out forwards;
+            opacity: 0;
+        }
+
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+        .delay-400 { animation-delay: 0.4s; }
+
         .timeline-line {
             position: absolute;
             left: 28px;
-            top: 0;
-            bottom: 0;
+            top: 20px;
+            bottom: 20px;
             width: 2px;
-            background-color: #e5e7eb;
+            background: linear-gradient(to bottom, #e5e7eb 0%, #cbd5e1 50%, #e5e7eb 100%);
             z-index: 0;
         }
 
-        .hide-scrollbar::-webkit-scrollbar {
-            display: none;
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .mobile-card:active { transform: scale(0.98); transition: transform 0.1s; }
+
+        .day-column { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .day-column:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
 
-        .hide-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
+        .cursor-copy { cursor: copy; }
+        .cursor-copy:hover { color: #2563eb; }
 
-        .mobile-card:active {
-            transform: scale(0.98);
-            transition: transform 0.1s;
+        .hero-bg {
+            background-image: url('https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?q=80&w=1920&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
         }
-
-        /* 電腦版專用 CSS */
-        .day-column {
+        
+        /* 地圖按鈕樣式 */
+        .map-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.75rem; /* text-xs */
+            padding: 2px 8px;
+            border-radius: 9999px;
+            border-width: 1px;
+            font-weight: 500;
             transition: all 0.2s;
         }
-
-        .day-column:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        .map-btn:hover {
+            opacity: 0.8;
+            transform: translateY(-1px);
         }
 
         @media print {
-            .no-print {
-                display: none;
-            }
-
-            .hidden-print {
-                display: none !important;
-            }
-
-            .print-block {
-                display: block !important;
-            }
-
-            body {
-                background-color: white;
-            }
-
-            .day-column {
-                break-inside: avoid;
-                border: 1px solid #ddd;
-                box-shadow: none;
-                transform: none !important;
-            }
+            .no-print { display: none; }
+            .print-block { display: block !important; }
+            body { background: white; }
+            .day-column { break-inside: avoid; border: 1px solid #ddd; box-shadow: none; transform: none !important; }
         }
     </style>
     <script>
         tailwind.config = {
-            theme: { extend: { colors: { flight: '#3b82f6', food: '#f59e0b', event: '#ec4899', hotel: '#6366f1', disney: '#8b5cf6', place: '#10b981' } } }
+            theme: { 
+                extend: { 
+                    colors: { 
+                        flight: '#3b82f6', food: '#f59e0b', event: '#ec4899', hotel: '#6366f1', disney: '#8b5cf6', place: '#10b981' 
+                    } 
+                } 
+            }
         }
     </script>
 </head>
 
-<body class="bg-gray-100 text-gray-800">
+<body class="text-gray-800 antialiased">
+
+    <!-- Hero Section -->
+    <div class="hero-bg h-64 md:h-80 relative flex items-center justify-center text-white no-print">
+        <div class="absolute inset-0 bg-black/40 backdrop-blur-[2px]"></div>
+        <div class="relative z-10 text-center px-4 animate-card">
+            <h1 class="text-3xl md:text-5xl font-bold mb-2 text-shadow">Tokyo Trip 2026</h1>
+            <p class="text-lg md:text-xl opacity-90 mb-4">Patricia & Jean</p>
+            <div class="inline-flex gap-4 bg-white/20 backdrop-blur-md px-6 py-3 rounded-2xl border border-white/30">
+                <div class="text-center">
+                    <span id="days" class="block text-2xl md:text-3xl font-bold">0</span>
+                    <span class="text-xs uppercase opacity-80">Days</span>
+                </div>
+                <div class="text-center">
+                    <span id="hours" class="block text-2xl md:text-3xl font-bold">0</span>
+                    <span class="text-xs uppercase opacity-80">Hrs</span>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- ========================================== -->
     <!--            手機版視圖 (MOBILE VIEW)         -->
-    <!--      只在 md (平板/電腦) 以下尺寸顯示        -->
     <!-- ========================================== -->
-    <div class="block md:hidden bg-gray-50 min-h-screen pb-20 mobile-view-container">
-
+    <div class="block md:hidden pb-20 mobile-view-container relative -mt-6">
+        
         <!-- 手機頂部導航 -->
-        <header class="bg-white sticky top-0 z-50 shadow-sm">
-            <div class="px-4 py-4 flex justify-between items-center">
-                <div>
-                    <h1 class="text-lg font-bold text-gray-900">🇯🇵 東京 2026</h1>
-                    <p class="text-xs text-gray-500">Patricia & Jean</p>
-                </div>
-                <span class="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded-full">1/29 - 2/6</span>
-            </div>
-            <nav class="border-t border-gray-100">
-                <div class="flex overflow-x-auto py-3 px-2 hide-scrollbar space-x-2">
-                    <a href="#m-day1"
-                        class="flex-shrink-0 px-4 py-1.5 bg-gray-100 rounded-full text-sm hover:bg-gray-800 hover:text-white transition">1/29</a>
-                    <a href="#m-day2"
-                        class="flex-shrink-0 px-4 py-1.5 bg-gray-100 rounded-full text-sm hover:bg-gray-800 hover:text-white transition">1/30</a>
-                    <a href="#m-day3"
-                        class="flex-shrink-0 px-4 py-1.5 bg-gray-100 rounded-full text-sm hover:bg-gray-800 hover:text-white transition">1/31</a>
-                    <a href="#m-day4"
-                        class="flex-shrink-0 px-4 py-1.5 bg-gray-100 rounded-full text-sm hover:bg-gray-800 hover:text-white transition">2/1</a>
-                    <a href="#m-day5"
-                        class="flex-shrink-0 px-4 py-1.5 bg-gray-100 rounded-full text-sm hover:bg-gray-800 hover:text-white transition">2/2</a>
-                    <a href="#m-day6"
-                        class="flex-shrink-0 px-4 py-1.5 bg-gray-100 rounded-full text-sm hover:bg-gray-800 hover:text-white transition">2/3</a>
-                    <a href="#m-day9"
-                        class="flex-shrink-0 px-4 py-1.5 bg-gray-100 rounded-full text-sm hover:bg-gray-800 hover:text-white transition">回程</a>
+        <div class="sticky top-0 z-50 glass shadow-sm rounded-t-3xl mx-2">
+            <nav class="border-b border-gray-100/50">
+                <div class="flex overflow-x-auto py-4 px-4 hide-scrollbar space-x-3">
+                    <a href="#m-day1" class="flex-shrink-0 px-4 py-2 bg-gray-100/80 rounded-xl text-sm font-medium hover:bg-gray-800 hover:text-white transition snap-center">1/29</a>
+                    <a href="#m-day2" class="flex-shrink-0 px-4 py-2 bg-gray-100/80 rounded-xl text-sm font-medium hover:bg-gray-800 hover:text-white transition snap-center">1/30</a>
+                    <a href="#m-day3" class="flex-shrink-0 px-4 py-2 bg-gray-100/80 rounded-xl text-sm font-medium hover:bg-gray-800 hover:text-white transition snap-center">1/31</a>
+                    <a href="#m-day4" class="flex-shrink-0 px-4 py-2 bg-gray-100/80 rounded-xl text-sm font-medium hover:bg-gray-800 hover:text-white transition snap-center">2/1</a>
+                    <a href="#m-day5" class="flex-shrink-0 px-4 py-2 bg-gray-100/80 rounded-xl text-sm font-medium hover:bg-gray-800 hover:text-white transition snap-center">2/2</a>
+                    <a href="#m-day6" class="flex-shrink-0 px-4 py-2 bg-gray-100/80 rounded-xl text-sm font-medium hover:bg-gray-800 hover:text-white transition snap-center">2/3</a>
+                    <a href="#m-day9" class="flex-shrink-0 px-4 py-2 bg-gray-100/80 rounded-xl text-sm font-medium hover:bg-gray-800 hover:text-white transition snap-center">回程</a>
                 </div>
             </nav>
-        </header>
+        </div>
 
         <main class="px-4 py-6 relative">
             <div class="timeline-line"></div>
 
             <!-- Mobile Day 1 -->
-            <div id="m-day1" class="relative pl-16 pb-10 scroll-mt-36">
-                <div
-                    class="absolute left-2 w-10 h-10 bg-white border-2 border-gray-300 rounded-full flex items-center justify-center font-bold text-xs shadow-sm z-10">
-                    1/29</div>
-                <h2 class="text-lg font-bold text-gray-800 mb-4 pt-2">Day 1: 抵達</h2>
-                <div class="bg-white rounded-xl shadow-sm p-4 mb-4 border-l-4 border-flight mobile-card">
-                    <div class="flex items-center gap-2 mb-2"><i class="fas fa-plane text-flight"></i><span
-                            class="font-bold">阿甄日本飛機</span></div>
-                    <div class="flex justify-between text-sm">
-                        <p>LHR 18:30</p>➜<p class="font-bold">HND 17:20</p>
+            <div id="m-day1" class="relative pl-16 pb-10 scroll-mt-48 animate-card delay-100">
+                <div class="absolute left-2 w-10 h-10 bg-white border-2 border-gray-300 rounded-full flex items-center justify-center font-bold text-xs shadow-md z-10 text-gray-600">1/29</div>
+                <h2 class="text-xl font-bold text-gray-800 mb-4 pt-1">Day 1: 抵達</h2>
+                <div class="bg-white rounded-2xl shadow-sm p-4 mb-4 border-l-4 border-flight mobile-card relative overflow-hidden">
+                    <div class="flex justify-between items-start mb-2">
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-plane text-flight"></i>
+                            <span class="font-bold">阿甄日本飛機</span>
+                        </div>
+                        <span class="text-xs bg-white border border-blue-100 text-blue-600 px-1.5 py-0.5 rounded shadow-sm font-bold">T3 ➔ T3</span>
+                    </div>
+                    <div class="flex justify-between text-sm items-end mt-2">
+                        <div class="text-gray-500">LHR 18:30</div>
+                        <i class="fas fa-arrow-right text-gray-300 text-xs mx-2"></i>
+                        <div class="font-bold text-lg text-gray-800">HND 17:20</div>
+                    </div>
+                     <!-- Map Button -->
+                     <div class="mt-3 text-right border-t border-gray-100 pt-2">
+                        <a href="https://maps.app.goo.gl/wXD8FNQ1tBb4J7qQA" target="_blank" class="map-btn text-flight border-blue-200 bg-blue-50">
+                            <i class="fas fa-map-location-dot"></i> 機場地圖
+                        </a>
                     </div>
                 </div>
-                <div class="bg-white rounded-xl shadow-sm p-4 mb-4 border-l-4 border-hotel mobile-card">
+                <div class="bg-white rounded-2xl shadow-sm p-4 mb-4 border-l-4 border-hotel mobile-card">
                     <h3 class="font-bold">HAMACHO HOTEL</h3>
-                    <p class="text-sm text-gray-500">訂位人: Patricia / 阿甄先 Check-in</p>
-                    <a href="https://maps.app.goo.gl/example" target="_blank"
-                        class="text-xs text-hotel mt-2 block font-bold">開啟地圖</a>
-                </div>
-                <div class="bg-white rounded-xl shadow-sm p-4 mb-4 border-l-4 border-gray-500 mobile-card">
-                    <div class="flex justify-between">
-                        <h3 class="font-bold">翠莎抵達</h3> <span class="border-gray-500 font-bold">23:50</span>
+                    <p class="text-sm text-gray-500 mt-1">訂位人: Patricia</p>
+                    <p class="text-xs text-gray-400">阿甄先 Check-in</p>
+                    <div class="mt-3 flex justify-end">
+                        <a href="https://maps.app.goo.gl/TzqYTFYx7pTJ86H87" target="_blank" class="map-btn text-hotel border-indigo-200 bg-indigo-50">
+                            <i class="fas fa-map-location-dot"></i> 飯店地圖
+                        </a>
                     </div>
-                    <p class="text-sm text-gray-500">~23:50 (搭末班車)</p>
+                </div>
+                <div class="bg-white rounded-2xl shadow-sm p-4 mb-4 border-l-4 border-gray-500 mobile-card">
+                    <div class="flex justify-between items-center">
+                        <h3 class="font-bold">翠莎抵達</h3> <span class="bg-gray-100 px-2 py-1 rounded text-xs font-mono font-bold">23:50</span>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-1">~23:50 (搭末班車)</p>
                 </div>
             </div>
 
             <!-- Mobile Day 2 -->
-            <div id="m-day2" class="relative pl-16 pb-10 scroll-mt-36">
-                <div
-                    class="absolute left-2 w-10 h-10 bg-white border-2 border-gray-300 rounded-full flex items-center justify-center font-bold text-xs shadow-sm z-10">
-                    1/30</div>
-                <h2 class="text-lg font-bold text-gray-800 mb-4 pt-2">Day 2: 演唱會</h2>
-                <div class="bg-white rounded-xl shadow-sm p-4 mb-4 border-l-4 border-food mobile-card">
-                    <div class="flex justify-between">
-                        <h3 class="font-bold">Peter Luger</h3><span class="text-food font-bold">13:30</span>
+            <div id="m-day2" class="relative pl-16 pb-10 scroll-mt-48 animate-card delay-200">
+                <div class="absolute left-2 w-10 h-10 bg-white border-2 border-gray-300 rounded-full flex items-center justify-center font-bold text-xs shadow-md z-10 text-gray-600">1/30</div>
+                <h2 class="text-xl font-bold text-gray-800 mb-4 pt-1">Day 2: 演唱會</h2>
+                <div class="bg-white rounded-2xl shadow-sm p-4 mb-4 border-l-4 border-food mobile-card">
+                    <div class="flex justify-between items-center">
+                        <h3 class="font-bold flex items-center gap-2"><i class="fas fa-utensils text-food text-xs"></i> Peter Luger</h3>
+                        <span class="text-food font-bold bg-orange-50 px-2 py-1 rounded text-sm">13:30</span>
                     </div>
-                    <p class="text-xs text-gray-500 mt-1">預約號: 7LS******</p>
-                    <p class="text-xs text-gray-400">惠比壽站 431m</p>
-                </div>
-                <div
-                    class="bg-gradient-to-r from-white to-pink-50 rounded-xl shadow-sm p-4 border-l-4 border-event mobile-card">
-                    <div class="flex justify-between">
-                        <h3 class="font-bold text-event">Lady Gaga 演唱會</h3>
-                        <span class="text-event font-bold">18:00</span>
+                    <div class="mt-3 bg-gray-50 p-2 rounded-lg flex justify-between items-center cursor-copy group" onclick="copyText('7LS7SSUANK')">
+                        <span class="text-xs text-gray-500">預約號: <span class="font-mono font-bold text-gray-700">7LS******</span></span>
+                        <i class="fas fa-copy text-gray-300 group-hover:text-blue-500 transition"></i>
                     </div>
-                    <p class="text-sm mt-1 text-gray-600">到東京巨蛋 / 19:00 開演</p>
+                    <div class="flex justify-between items-center mt-3">
+                        <p class="text-xs text-gray-400"><i class="fas fa-map-pin mr-1"></i>惠比壽站 431m</p>
+                        <a href="https://maps.app.goo.gl/aSKgQoXhcK1zpAb97" target="_blank" class="map-btn text-food border-orange-200 bg-orange-50">
+                            <i class="fas fa-map-location-dot"></i> 地圖
+                        </a>
+                    </div>
                 </div>
-                <!-- <div
-                    class="bg-gradient-to-r from-white to-pink-50 rounded-xl shadow-sm p-4 border-l-4 border-event mobile-card">
-                    <h3 class="font-bold text-event">Lady Gaga 演唱會</h3>
-                    <p class="text-sm mt-1">18:00 到東京巨蛋 / 19:00 開演</p>
-                </div> -->
+                <div class="bg-gradient-to-r from-white to-pink-50 rounded-2xl shadow-sm p-4 border-l-4 border-event mobile-card">
+                    <div class="flex justify-between items-center">
+                        <h3 class="font-bold text-event flex items-center gap-2"><i class="fas fa-music"></i> Lady Gaga</h3>
+                        <span class="text-white bg-event px-2 py-1 rounded text-sm font-bold shadow-sm">18:00</span>
+                    </div>
+                    <div class="mt-2 text-sm text-gray-600 flex flex-col gap-1">
+                        <div class="flex justify-between items-center">
+                            <span><i class="fas fa-map-marker-alt text-pink-300 mr-1"></i> 東京巨蛋</span>
+                            <a href="https://maps.app.goo.gl/4MGboQuy22gDxbz68" target="_blank" class="map-btn text-event border-pink-200 bg-white">
+                                <i class="fas fa-map-location-dot"></i> 地圖
+                            </a>
+                        </div>
+                        <span class="font-bold text-event mt-1">19:00 開演 🎵</span>
+                    </div>
+                </div>
             </div>
 
             <!-- Mobile Day 3 -->
-            <div id="m-day3" class="relative pl-16 pb-10 scroll-mt-36">
-                <div
-                    class="absolute left-2 w-10 h-10 bg-white border-2 border-gray-300 rounded-full flex items-center justify-center font-bold text-xs shadow-sm z-10">
-                    1/31</div>
-                <h2 class="text-lg font-bold text-gray-800 mb-4 pt-2">Day 3: 吉祥寺</h2>
-                <div class="bg-white rounded-xl shadow-sm p-4 mb-4 border-l-4 border-food mobile-card">
-                    <div class="flex justify-between">
+            <div id="m-day3" class="relative pl-16 pb-10 scroll-mt-48 animate-card delay-300">
+                <div class="absolute left-2 w-10 h-10 bg-white border-2 border-gray-300 rounded-full flex items-center justify-center font-bold text-xs shadow-md z-10 text-gray-600">1/31</div>
+                <h2 class="text-xl font-bold text-gray-800 mb-4 pt-1">Day 3: 吉祥寺</h2>
+                <div class="bg-white rounded-2xl shadow-sm p-4 mb-4 border-l-4 border-food mobile-card">
+                    <div class="flex justify-between items-center">
                         <h3 class="font-bold">Ramen 翡翠</h3><span class="text-food font-bold">11:30</span>
                     </div>
-                    <p class="text-xs text-gray-500">赤坂</p>
-                </div>
-                <div class="bg-white rounded-xl shadow-sm p-4 mb-4 border-l-4 border-green-600 mobile-card">
-                    <div class="flex justify-between">
-                        <h3 class="font-bold">吉卜力美術館</h3><span class="text-green-600 font-bold">15:00</span>
+                    <div class="flex justify-between items-center mt-2">
+                        <p class="text-xs text-gray-500">赤坂</p>
+                        <a href="https://maps.app.goo.gl/4CwLU3fvSHzsDJ6f6" target="_blank" class="map-btn text-food border-orange-200 bg-orange-50">
+                            <i class="fas fa-map-location-dot"></i> 地圖
+                        </a>
                     </div>
-                    <p class="text-xs text-gray-500">井之頭公園</p>
                 </div>
-                <div class="bg-white rounded-xl shadow-sm p-4 border-l-4 border-place mobile-card">
-                    <h3 class="font-bold">澀谷 & 古著店</h3>
-                    <p class="text-sm text-gray-500">去吉祥寺前先逛逛</p>
+                <div class="bg-white rounded-2xl shadow-sm p-4 mb-4 border-l-4 border-green-600 mobile-card">
+                    <div class="flex justify-between items-center">
+                        <h3 class="font-bold text-green-800">吉卜力美術館</h3><span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-bold">15:00</span>
+                    </div>
+                    <div class="flex justify-between items-center mt-2">
+                        <p class="text-xs text-gray-500"><i class="fas fa-tree text-green-500 mr-1"></i>井之頭公園</p>
+                        <a href="https://maps.app.goo.gl/3VX9XM6AyDDTtHFT9" target="_blank" class="map-btn text-green-700 border-green-200 bg-green-50">
+                            <i class="fas fa-map-location-dot"></i> 地圖
+                        </a>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl shadow-sm p-4 border-l-4 border-place mobile-card">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="font-bold">澀谷 & 古著店</h3>
+                            <p class="text-sm text-gray-500 mt-1">去吉祥寺前先逛逛</p>
+                        </div>
+                        <a href="https://maps.app.goo.gl/Vq91Drw2JVK4myJj6" target="_blank" class="map-btn text-gray-600 border-gray-200 bg-gray-50">
+                            <i class="fas fa-map-location-dot"></i> 地圖
+                        </a>
+                    </div>
                 </div>
             </div>
 
             <!-- Mobile Day 4 -->
-            <div id="m-day4" class="relative pl-16 pb-10 scroll-mt-36">
-                <div
-                    class="absolute left-2 w-10 h-10 bg-white border-2 border-gray-300 rounded-full flex items-center justify-center font-bold text-xs shadow-sm z-10">
-                    2/1</div>
-                <h2 class="text-lg font-bold text-gray-800 mb-4 pt-2">Day 4: Disney</h2>
-                <div class="bg-disney text-white rounded-xl shadow-sm p-5 text-center mobile-card">
-                    <i class="fas fa-crown text-2xl mb-2"></i>
-                    <h3 class="font-bold text-xl">DisneySea</h3>
-                    <p class="text-xs opacity-80 mt-1">全日行程</p>
+            <div id="m-day4" class="relative pl-16 pb-10 scroll-mt-48 animate-card delay-400">
+                <div class="absolute left-2 w-10 h-10 bg-white border-2 border-gray-300 rounded-full flex items-center justify-center font-bold text-xs shadow-md z-10 text-gray-600">2/1</div>
+                <h2 class="text-xl font-bold text-gray-800 mb-4 pt-1">Day 4: Disney</h2>
+                <div class="bg-gradient-to-br from-purple-500 to-indigo-600 text-white rounded-2xl shadow-md p-6 text-center mobile-card relative overflow-hidden">
+                    <div class="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-white opacity-10 rounded-full blur-xl"></div>
+                    <i class="fas fa-crown text-3xl mb-3 text-yellow-300"></i>
+                    <h3 class="font-bold text-2xl tracking-wide">DisneySea</h3>
+                    <p class="text-sm opacity-90 mt-2 font-light">全日夢幻行程</p>
+                    <div class="mt-4 flex justify-center">
+                        <a href="https://maps.app.goo.gl/Qm2cktecgoeZ6bXc8" target="_blank" class="bg-white/20 hover:bg-white/30 text-white border border-white/40 px-3 py-1 rounded-full text-xs transition flex items-center gap-1 backdrop-blur-sm">
+                            <i class="fas fa-map-location-dot"></i> 開啟園區地圖
+                        </a>
+                    </div>
                 </div>
             </div>
 
             <!-- Mobile Day 5 -->
-            <div id="m-day5" class="relative pl-16 pb-10 scroll-mt-36">
-                <div
-                    class="absolute left-2 w-10 h-10 bg-white border-2 border-gray-300 rounded-full flex items-center justify-center font-bold text-xs shadow-sm z-10">
-                    2/2</div>
-                <h2 class="text-lg font-bold text-gray-800 mb-4 pt-2">Day 5: 移動</h2>
-                <div class="bg-white rounded-xl shadow-sm p-4 mb-4 border-l-4 border-food mobile-card">
-                    <h3 class="font-bold">早午餐: らぁ麺や 嶋</h3>
-                    <p class="text-xs text-gray-500">新宿人氣店</p>
+            <div id="m-day5" class="relative pl-16 pb-10 scroll-mt-48 animate-card">
+                <div class="absolute left-2 w-10 h-10 bg-white border-2 border-gray-300 rounded-full flex items-center justify-center font-bold text-xs shadow-md z-10 text-gray-600">2/2</div>
+                <h2 class="text-xl font-bold text-gray-800 mb-4 pt-1">Day 5: 移動</h2>
+                <div class="bg-white rounded-2xl shadow-sm p-4 mb-4 border-l-4 border-food mobile-card">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="font-bold">早午餐: らぁ麺や 嶋</h3>
+                            <p class="text-xs text-gray-500 mt-1">新宿人氣店</p>
+                        </div>
+                        <a href="https://maps.app.goo.gl/npjjf9LHFf52wHFDA" target="_blank" class="map-btn text-food border-orange-200 bg-orange-50">
+                            <i class="fas fa-map-location-dot"></i> 地圖
+                        </a>
+                    </div>
                 </div>
-                <div class="bg-indigo-50 rounded-xl shadow-sm p-4 border border-indigo-200 mobile-card">
-                    <h3 class="font-bold text-indigo-900">移動至橫濱</h3>
-                    <p class="text-sm text-indigo-700">入住 Hilton Yokohama</p>
+                <div class="bg-indigo-50 rounded-2xl shadow-sm p-4 border border-indigo-200 mobile-card">
+                    <h3 class="font-bold text-indigo-900 flex items-center gap-2"><i class="fas fa-suitcase-rolling"></i> 移動至橫濱</h3>
+                    <div class="flex justify-between items-center mt-2 pl-6">
+                        <p class="text-sm text-indigo-700">入住 Hilton Yokohama</p>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Hilton+Yokohama" target="_blank" class="map-btn text-indigo-700 border-indigo-300 bg-white">
+                            <i class="fas fa-map-location-dot"></i> 地圖
+                        </a>
+                    </div>
                 </div>
             </div>
 
             <!-- Mobile Day 6 -->
-            <div id="m-day6" class="relative pl-16 pb-10 scroll-mt-36">
-                <div
-                    class="absolute left-2 w-10 h-10 bg-white border-2 border-gray-300 rounded-full flex items-center justify-center font-bold text-xs shadow-sm z-10">
-                    2/3</div>
-                <h2 class="text-lg font-bold text-gray-800 mb-4 pt-2">Day 6: 橫濱</h2>
-                <div class="bg-white rounded-xl shadow-sm p-4 border-l-4 border-place mobile-card">
-                    <h3 class="font-bold">橫濱一日遊</h3>
-                    <p class="text-xs text-gray-500">*好好笑，這AI想的</p>
-                    <p class="text-sm text-gray-500">紅磚倉庫、中華街、港未來</p>
+            <div id="m-day6" class="relative pl-16 pb-10 scroll-mt-48 animate-card">
+                <div class="absolute left-2 w-10 h-10 bg-white border-2 border-gray-300 rounded-full flex items-center justify-center font-bold text-xs shadow-md z-10 text-gray-600">2/3</div>
+                <h2 class="text-xl font-bold text-gray-800 mb-4 pt-1">Day 6: 橫濱</h2>
+                <div class="bg-white rounded-2xl shadow-sm p-4 border-l-4 border-place mobile-card">
+                    <h3 class="font-bold text-teal-800">橫濱一日遊</h3>
+                    <div class="my-2 bg-yellow-50 text-yellow-700 text-xs px-2 py-1 rounded inline-block">
+                        <i class="fas fa-comment-dots mr-1"></i> 好好笑，這AI想的
+                    </div>
+                    <p class="text-sm text-gray-600">紅磚倉庫、中華街、港未來</p>
                 </div>
             </div>
 
-            <!-- Mobile Day 9 -->
-            <div id="m-day9" class="relative pl-16 pb-10 scroll-mt-36">
-                <div
-                    class="absolute left-2 w-10 h-10 bg-white border-2 border-gray-300 rounded-full flex items-center justify-center font-bold text-xs shadow-sm z-10">
-                    2/6</div>
-                <h2 class="text-lg font-bold text-gray-800 mb-4 pt-2">Day 9: 回家</h2>
-                <div class="bg-white rounded-xl shadow-sm p-4 border-l-4 border-flight mobile-card">
-                    <div class="flex items-center gap-2 mb-2"><i class="fas fa-plane-departure text-flight"></i><span
-                            class="font-bold">阿珍英國飛機</span></div>
-                    <div class="flex justify-between text-sm">
-                        <p>HND 13:15</p>➜<p class="font-bold">LHR 19:10</p>
+             <!-- Mobile Day 9 -->
+             <div id="m-day9" class="relative pl-16 pb-10 scroll-mt-48 animate-card">
+                <div class="absolute left-2 w-10 h-10 bg-white border-2 border-gray-300 rounded-full flex items-center justify-center font-bold text-xs shadow-md z-10 text-gray-600">2/6</div>
+                <h2 class="text-xl font-bold text-gray-800 mb-4 pt-1">Day 9: 回家</h2>
+                <div class="bg-white rounded-2xl shadow-sm p-4 border-l-4 border-flight mobile-card">
+                    <div class="flex justify-between items-start mb-2">
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-plane-departure text-flight"></i>
+                            <span class="font-bold">阿珍英國飛機</span>
+                        </div>
+                        <span class="text-xs bg-white border border-blue-100 text-blue-600 px-1.5 py-0.5 rounded shadow-sm font-bold">T3 ➔ T5</span>
+                    </div>
+
+                    <div class="flex justify-between text-sm items-end mt-2">
+                        <p class="text-gray-500">HND 13:15</p>
+                        <i class="fas fa-long-arrow-alt-right text-gray-300"></i>
+                        <p class="font-bold text-lg">LHR 19:10</p>
+                    </div>
+                    <!-- Map Button -->
+                    <div class="mt-3 text-right border-t border-gray-100 pt-2">
+                        <a href="https://maps.app.goo.gl/wXD8FNQ1tBb4J7qQA" target="_blank" class="map-btn text-flight border-blue-200 bg-blue-50">
+                            <i class="fas fa-map-location-dot"></i> 機場地圖
+                        </a>
                     </div>
                 </div>
             </div>
         </main>
-
-        <div class="fixed bottom-4 right-4 z-50">
-            <a href="#"
-                class="bg-gray-800 text-white w-10 h-10 rounded-full flex items-center justify-center shadow-lg"><i
-                    class="fas fa-arrow-up text-sm"></i></a>
+        
+        <div class="fixed bottom-6 right-6 z-50">
+            <a href="#" class="bg-gray-900 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-xl hover:bg-black transition transform hover:scale-110 active:scale-95">
+                <i class="fas fa-arrow-up"></i>
+            </a>
         </div>
     </div>
 
     <!-- ========================================== -->
     <!--            電腦版視圖 (DESKTOP VIEW)        -->
-    <!--        只在 md (平板/電腦) 以上尺寸顯示      -->
     <!-- ========================================== -->
-    <div class="hidden md:block min-h-screen p-4 print-block">
-
+    <div class="hidden md:block min-h-screen p-8 print-block">
+        
         <!-- Desktop Header -->
-        <header class="w-full mx-auto flex justify-between items-center mb-6 px-4">
+        <header class="w-full mx-auto flex justify-between items-center mb-8 px-4 animate-card">
             <div class="flex items-center gap-4">
-                <div class="bg-gray-900 text-white w-12 h-12 flex items-center justify-center rounded-lg text-2xl">🇯🇵
-                </div>
+                <div class="bg-white shadow-md text-3xl w-14 h-14 flex items-center justify-center rounded-2xl transform rotate-3">🇯🇵</div>
                 <div>
-                    <h1 class="text-3xl font-bold text-gray-900">東京之旅 2026</h1>
-                    <p class="text-gray-500">Patricia & Jean (2人) | 1月29日 - 2月6日</p>
+                    <h1 class="text-3xl font-bold text-gray-900 tracking-tight">東京之旅 2026</h1>
+                    <p class="text-gray-500 font-medium mt-1">Patricia & Jean (2人) | 1月29日 - 2月6日</p>
                 </div>
             </div>
-            <button onclick="window.print()"
-                class="no-print bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 px-4 py-2 rounded-lg shadow-sm flex items-center gap-2 cursor-pointer transition">
+            <button onclick="window.print()" class="no-print bg-white border border-gray-200 hover:bg-gray-50 hover:border-gray-300 text-gray-700 px-5 py-2.5 rounded-xl shadow-sm flex items-center gap-2 cursor-pointer transition font-medium">
                 <i class="fas fa-print"></i> 列印行程
             </button>
         </header>
 
         <!-- Desktop Grid -->
-        <!-- 修改重點：卡片加上 flex flex-col h-full，內部色塊改用 flex-grow -->
-        <main class="w-full mx-auto px-4 grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        <main class="w-full mx-auto px-4 grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
 
             <!-- Desktop Day 1 -->
-            <div class="bg-white rounded-xl shadow-sm p-5 day-column border-t-8 border-gray-800 h-full flex flex-col">
-                <div class="flex justify-between items-center mb-4">
+            <div class="bg-white rounded-2xl shadow-sm p-5 day-column border-t-8 border-gray-800 h-full flex flex-col animate-card delay-100">
+                <div class="flex justify-between items-center mb-4 pb-3 border-b border-gray-100">
                     <h2 class="text-xl font-bold">1/29 (四)</h2>
-                    <span class="text-xs font-bold text-gray-400">Day 1</span>
+                    <span class="text-xs font-bold text-gray-500 bg-gray-100 px-3 py-1 rounded-full">Day 1</span>
                 </div>
                 <div class="space-y-3 flex-grow">
-                    <div class="bg-blue-50 p-3 rounded-lg border-l-4 border-flight">
-                        <div class="flex justify-between text-sm mb-1"><span class="font-bold text-flight">阿珍日本飛機</span>
-                            <span class="text-xs bg-white px-1 rounded">T3 ➔ T3</span>
+                    <div class="bg-blue-50/50 p-3 rounded-xl border-l-4 border-flight hover:bg-blue-50 transition">
+                        <div class="flex justify-between text-sm mb-1"><span class="font-bold text-flight">阿珍日本飛機</span> <span class="text-xs bg-white px-1.5 py-0.5 rounded text-blue-800 font-bold shadow-sm">T3 ➔ T3</span></div>
+                        <div class="flex justify-between items-center mt-3">
+                            <div class="text-center">
+                                <div class="text-xs text-gray-400 font-bold">LHR</div>
+                                <div class="font-bold text-lg text-gray-800">18:30</div>
+                            </div>
+                            
+                            <!-- 飛行路徑 -->
+                            <div class="flex-1 flex items-center justify-center px-3">
+                                <div class="h-0.5 w-full bg-gray-200 border-b border-dashed border-blue-200 relative">
+                                    <i class="fas fa-plane text-blue-400 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-blue-50 px-1 text-sm"></i>
+                                </div>
+                            </div>
+
+                            <div class="text-center">
+                                <div class="text-xs text-gray-400 font-bold">HND</div>
+                                <div class="font-bold text-lg text-gray-800">17:20</div>
+                            </div>
                         </div>
-                        <div class="flex justify-between items-center mt-2">
-                            <div class="text-center">
-                                <div class="text-xs text-gray-500">LHR</div>
-                                <div class="font-bold">18:30</div>
-                            </div>
-                            <i class="fas fa-arrow-right text-gray-300"></i>
-                            <div class="text-center">
-                                <div class="text-xs text-gray-500">HND</div>
-                                <div class="font-bold">17:20</div>
-                            </div>
+                        <div class="text-right mt-2">
+                             <a href="https://maps.app.goo.gl/MeYskDvdBzzgAZRL7" target="_blank" class="map-btn text-flight border-blue-200 bg-white">
+                                <i class="fas fa-map-location-dot"></i> 地圖
+                            </a>
                         </div>
                     </div>
-                    <div class="bg-indigo-50 p-3 rounded-lg border-l-4 border-hotel">
-                        <div class="font-bold text-indigo-900 text-sm"><i class="fas fa-hotel"></i> HAMACHO HOTEL</div>
-                        <div class="text-xs text-indigo-700 mt-1">訂位: Patricia / 阿甄先Check in</div>
+                    <div class="bg-indigo-50/50 p-3 rounded-xl border-l-4 border-hotel hover:bg-indigo-50 transition">
+                        <div class="flex justify-between items-start">
+                             <div class="font-bold text-indigo-900 text-sm flex items-center gap-2"><i class="fas fa-hotel"></i> HAMACHO HOTEL</div>
+                             <a href="https://www.google.com/maps/search/?api=1&query=HAMACHO+HOTEL+TOKYO" target="_blank" class="map-btn text-indigo-700 border-indigo-200 bg-white">
+                                <i class="fas fa-map-location-dot"></i> 地圖
+                            </a>
+                        </div>
+                        <div class="text-xs text-indigo-700 mt-2 bg-white/60 p-2 rounded">訂位: Patricia <br> 阿甄先 Check in</div>
                     </div>
-                    <div class="p-3 border rounded-lg border-dashed border-gray-300">
-                        <div class="font-bold text-sm">翠莎抵達</div>
-                        <div class="text-xs text-gray-500">~23:50 (末班車)</div>
+                    <div class="p-3 border rounded-xl border-dashed border-gray-300 bg-gray-50/50">
+                        <div class="font-bold text-sm text-gray-700">翠莎抵達</div>
+                        <div class="text-xs text-gray-500 mt-1">~23:50 (末班車)</div>
                     </div>
                 </div>
             </div>
 
             <!-- Desktop Day 2 -->
-            <div class="bg-white rounded-xl shadow-sm p-5 day-column border-t-8 border-pink-500 h-full flex flex-col">
-                <div class="flex justify-between items-center mb-4">
+            <div class="bg-white rounded-2xl shadow-sm p-5 day-column border-t-8 border-pink-500 h-full flex flex-col animate-card delay-200">
+                <div class="flex justify-between items-center mb-4 pb-3 border-b border-gray-100">
                     <h2 class="text-xl font-bold">1/30 (五)</h2>
-                    <span class="text-xs font-bold text-gray-400">Day 2</span>
+                    <span class="text-xs font-bold text-gray-500 bg-gray-100 px-3 py-1 rounded-full">Day 2</span>
                 </div>
                 <div class="space-y-3 flex-grow">
-                    <div class="bg-orange-50 p-3 rounded-lg border-l-4 border-food">
-                        <div class="flex justify-between text-sm mb-1"><span class="font-bold text-food">Peter
-                                Luger</span> <b>13:30</b></div>
-                        <div class="text-xs text-gray-500 bg-white inline-block px-1 rounded border">No. 7LS*******
+                    <div class="bg-orange-50/50 p-3 rounded-xl border-l-4 border-food hover:bg-orange-50 transition">
+                        <div class="flex justify-between text-sm mb-1"><span class="font-bold text-food">Peter Luger</span> <b class="bg-orange-100 text-orange-800 px-1.5 rounded text-xs py-0.5">13:30</b></div>
+                        <div class="text-xs text-gray-500 bg-white inline-block px-2 py-1 rounded border border-gray-200 mt-1 cursor-copy hover:border-blue-400 hover:text-blue-600 transition" onclick="copyText('7LS7SSUANK')" title="點擊複製">No. 7LS******* <i class="fas fa-copy ml-1"></i></div>
+                        <div class="flex justify-between items-end mt-2">
+                             <div class="text-xs text-gray-400 flex items-center"><i class="fas fa-map-marker-alt mr-1"></i> 惠比壽站 431m</div>
+                             <a href="https://maps.app.goo.gl/aSKgQoXhcK1zpAb97" target="_blank" class="map-btn text-food border-orange-200 bg-white">
+                                <i class="fas fa-map-location-dot"></i> 地圖
+                            </a>
                         </div>
-                        <div class="text-xs text-gray-400 mt-1">惠比壽站 431m</div>
                     </div>
-                    <div class="bg-pink-50 p-3 rounded-lg border-l-4 border-event">
-                        <!-- 修改這裡：加入 flex justify-between 讓時間跑到右邊 -->
-                        <div class="flex justify-between text-sm mb-1">
-                            <span class="font-bold text-event"><i class="fas fa-music"></i> Lady Gaga</span>
-                            <b>18:00</b>
+                    <div class="bg-gradient-to-r from-pink-50 to-white p-3 rounded-xl border-l-4 border-event shadow-sm">
+                        <div class="flex justify-between text-sm mb-1 items-center">
+                            <span class="font-bold text-event flex items-center gap-1"><i class="fas fa-music"></i> Lady Gaga</span> 
+                            <b class="text-white bg-event px-2 py-0.5 rounded text-xs shadow-sm">18:00</b>
                         </div>
-                        <div class="text-xs text-gray-600">到東京巨蛋</div>
-                        <div class="text-xs font-bold mt-1">19:00 開演</div>
+                        <div class="text-xs text-gray-600 mt-2 pl-5 border-l-2 border-pink-200">
+                            <div class="flex justify-between items-center">
+                                <span>到東京巨蛋</span>
+                                <a href="https://maps.app.goo.gl/4MGboQuy22gDxbz68" target="_blank" class="map-btn text-event border-pink-200 bg-white">
+                                    <i class="fas fa-map-location-dot"></i> 地圖
+                                </a>
+                            </div>
+                            <div class="font-bold text-event mt-1">19:00 開演</div>
+                        </div>
                     </div>
-                    <!-- <div class="bg-pink-50 p-3 rounded-lg border-l-4 border-event">
-                        <div class="font-bold text-event mb-1"><i class="fas fa-music"></i> Lady Gaga</div>
-                        <div class="text-sm">18:00 到東京巨蛋</div>
-                        <div class="text-sm font-bold">19:00 開演</div>
-                    </div> -->
                 </div>
             </div>
 
             <!-- Desktop Day 3 -->
-            <div class="bg-white rounded-xl shadow-sm p-5 day-column border-t-8 border-green-500 h-full flex flex-col">
-                <div class="flex justify-between items-center mb-4">
+            <div class="bg-white rounded-2xl shadow-sm p-5 day-column border-t-8 border-green-500 h-full flex flex-col animate-card delay-300">
+                <div class="flex justify-between items-center mb-4 pb-3 border-b border-gray-100">
                     <h2 class="text-xl font-bold">1/31 (六)</h2>
-                    <span class="text-xs font-bold text-gray-400">Day 3</span>
+                    <span class="text-xs font-bold text-gray-500 bg-gray-100 px-3 py-1 rounded-full">Day 3</span>
                 </div>
                 <div class="space-y-3 flex-grow">
-                    <div class="bg-orange-50 p-3 rounded-lg border-l-4 border-food">
-                        <div class="flex justify-between text-sm"><span class="font-bold text-food">Ramen 翡翠</span>
-                            <b>11:30</b>
+                    <div class="bg-orange-50/50 p-3 rounded-xl border-l-4 border-food hover:bg-orange-50 transition">
+                        <div class="flex justify-between text-sm"><span class="font-bold text-food">Ramen 翡翠</span> <b class="text-xs bg-orange-100 px-1.5 py-0.5 rounded text-orange-800">11:30</b></div>
+                        <div class="flex justify-between items-center mt-1">
+                             <div class="text-xs text-gray-500">赤坂</div>
+                             <a href="https://maps.app.goo.gl/4CwLU3fvSHzsDJ6f6" target="_blank" class="map-btn text-food border-orange-200 bg-white">
+                                <i class="fas fa-map-location-dot"></i> 地圖
+                            </a>
                         </div>
-                        <div class="text-xs text-gray-500 mt-1">赤坂</div>
                     </div>
-                    <div class="p-3 bg-gray-50 rounded-lg border-l-4 border-place">
-                        <div class="font-bold text-sm">澀谷 & 古著店</div>
-                        <div class="text-xs text-gray-500">去吉祥寺前</div>
-                    </div>
-                    <div class="bg-green-50 p-3 rounded-lg border-l-4 border-green-600">
-                        <div class="flex justify-between text-sm"><span class="font-bold text-green-800">吉卜力美術館</span>
-                            <b>15:00</b>
+                    <div class="p-3 bg-gray-50 rounded-xl border-l-4 border-place hover:bg-gray-100 transition">
+                        <div class="flex justify-between items-center">
+                            <div class="font-bold text-sm text-gray-700">澀谷 & 古著店</div>
+                            <a href="https://www.google.com/maps/search/?api=1&query=Shibuya" target="_blank" class="map-btn text-gray-600 border-gray-300 bg-white">
+                                <i class="fas fa-map-location-dot"></i> 地圖
+                            </a>
                         </div>
-                        <div class="text-xs text-green-700 mt-1">井之頭公園</div>
+                        <div class="text-xs text-gray-500 mt-1">去吉祥寺前</div>
                     </div>
-                    <div class="text-xs text-gray-400 text-center border-t pt-2">晚餐: 吉祥寺周邊</div>
+                    <div class="bg-green-50/50 p-3 rounded-xl border-l-4 border-green-600 hover:bg-green-50 transition">
+                        <div class="flex justify-between text-sm"><span class="font-bold text-green-800">吉卜力美術館</span> <b class="text-xs bg-green-100 px-1.5 py-0.5 rounded text-green-800">15:00</b></div>
+                        <div class="flex justify-between items-center mt-1">
+                             <div class="text-xs text-green-700"><i class="fas fa-tree mr-1"></i>井之頭公園</div>
+                             <a href="https://maps.app.goo.gl/3VX9XM6AyDDTtHFT9" target="_blank" class="map-btn text-green-700 border-green-200 bg-white">
+                                <i class="fas fa-map-location-dot"></i> 地圖
+                            </a>
+                        </div>
+                    </div>
+                    <div class="text-xs text-gray-400 text-center border-t border-dashed pt-2 mt-2">晚餐: 吉祥寺周邊</div>
                 </div>
             </div>
 
             <!-- Desktop Day 4 -->
-            <div class="bg-white rounded-xl shadow-sm p-5 day-column border-t-8 border-disney h-full flex flex-col">
-                <div class="flex justify-between items-center mb-4">
+            <div class="bg-white rounded-2xl shadow-sm p-5 day-column border-t-8 border-disney h-full flex flex-col animate-card delay-400">
+                <div class="flex justify-between items-center mb-4 pb-3 border-b border-gray-100">
                     <h2 class="text-xl font-bold">2/1 (日)</h2>
-                    <span class="text-xs font-bold text-gray-400">Day 4</span>
+                    <span class="text-xs font-bold text-gray-500 bg-gray-100 px-3 py-1 rounded-full">Day 4</span>
                 </div>
-                <!-- Disney Box: 使用 flex-grow 自動填滿剩下空間，不使用固定高度 -->
-                <div
-                    class="bg-disney rounded-lg flex flex-col items-center justify-center text-white shadow-inner flex-grow min-h-[160px]">
-                    <i class="fas fa-crown text-4xl mb-2"></i>
-                    <div class="text-2xl font-bold">DisneySea</div>
-                    <div class="text-xs opacity-75 mt-1">All Day</div>
+                <div class="bg-gradient-to-br from-purple-500 to-indigo-600 rounded-xl flex flex-col items-center justify-center text-white shadow-md flex-grow min-h-[180px] relative overflow-hidden group">
+                    <div class="absolute inset-0 bg-black opacity-0 group-hover:opacity-10 transition duration-500"></div>
+                    <div class="absolute -top-10 -right-10 w-32 h-32 bg-white opacity-10 rounded-full blur-2xl"></div>
+                    <i class="fas fa-crown text-5xl mb-3 text-yellow-300 drop-shadow-md transform group-hover:scale-110 transition duration-300"></i>
+                    <div class="text-3xl font-bold tracking-wider">DisneySea</div>
+                    <div class="text-xs opacity-80 mt-2 bg-white/20 px-3 py-1 rounded-full backdrop-blur-sm">All Day</div>
+                    
+                    <a href="https://maps.app.goo.gl/Qm2cktecgoeZ6bXc8" target="_blank" class="absolute bottom-4 right-4 bg-white/20 hover:bg-white/30 text-white border border-white/40 px-3 py-1 rounded-full text-xs transition flex items-center gap-1 backdrop-blur-sm">
+                        <i class="fas fa-map-location-dot"></i> 地圖
+                    </a>
                 </div>
-                <div class="mt-3 text-center text-xs text-gray-500 bg-gray-100 p-2 rounded">
+                <div class="mt-4 text-center text-xs text-gray-500 bg-gray-50 p-2 rounded-lg border border-gray-100">
                     HAMACHO HOTEL (最後一晚)
                 </div>
             </div>
 
             <!-- Desktop Day 5 -->
-            <div class="bg-white rounded-xl shadow-sm p-5 day-column border-t-8 border-indigo-500 h-full flex flex-col">
-                <div class="flex justify-between items-center mb-4">
+            <div class="bg-white rounded-2xl shadow-sm p-5 day-column border-t-8 border-indigo-500 h-full flex flex-col animate-card delay-100">
+                <div class="flex justify-between items-center mb-4 pb-3 border-b border-gray-100">
                     <h2 class="text-xl font-bold">2/2 (一)</h2>
-                    <span class="text-xs font-bold text-gray-400">Day 5</span>
+                    <span class="text-xs font-bold text-gray-500 bg-gray-100 px-3 py-1 rounded-full">Day 5</span>
                 </div>
                 <div class="space-y-3 flex-grow">
-                    <div class="bg-orange-50 p-3 rounded-lg border-l-4 border-food">
-                        <div class="font-bold text-food text-sm">らぁ麺や 嶋</div>
-                        <div class="text-xs text-gray-500">新宿早午餐</div>
+                    <div class="bg-orange-50/50 p-3 rounded-xl border-l-4 border-food hover:bg-orange-50 transition">
+                        <div class="flex justify-between items-center">
+                             <div class="font-bold text-food text-sm">らぁ麺や 嶋</div>
+                             <a href="https://maps.app.goo.gl/npjjf9LHFf52wHFDA" target="_blank" class="map-btn text-food border-orange-200 bg-white">
+                                <i class="fas fa-map-location-dot"></i> 地圖
+                            </a>
+                        </div>
+                        <div class="text-xs text-gray-500 mt-1">新宿早午餐</div>
                     </div>
-                    <div class="bg-indigo-50 p-3 rounded-lg border border-indigo-200 text-center">
-                        <div class="text-indigo-900 font-bold mb-1"><i class="fas fa-suitcase-rolling"></i> 移動至橫濱</div>
-                        <div class="text-sm bg-white rounded py-1 px-2 inline-block shadow-sm">Hilton Yokohama</div>
+                    <div class="bg-indigo-50 p-4 rounded-xl border border-indigo-100 text-center hover:bg-indigo-100 transition">
+                        <div class="text-indigo-900 font-bold mb-2 flex justify-center items-center gap-2"><i class="fas fa-suitcase-rolling"></i> 移動至橫濱</div>
+                        <div class="flex justify-center items-center gap-2">
+                             <div class="text-sm bg-white rounded-lg py-1.5 px-3 inline-block shadow-sm text-indigo-800 font-medium">Hilton Yokohama</div>
+                             <a href="https://www.google.com/maps/search/?api=1&query=Hilton+Yokohama" target="_blank" class="map-btn text-indigo-700 border-indigo-300 bg-white">
+                                <i class="fas fa-map-location-dot"></i> 地圖
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Desktop Day 6 (修正重點) -->
-            <div class="bg-white rounded-xl shadow-sm p-5 day-column border-t-8 border-teal-500 h-full flex flex-col">
-                <div class="flex justify-between items-center mb-4">
+            <!-- Desktop Day 6 -->
+            <div class="bg-white rounded-2xl shadow-sm p-5 day-column border-t-8 border-teal-500 h-full flex flex-col animate-card delay-200">
+                <div class="flex justify-between items-center mb-4 pb-3 border-b border-gray-100">
                     <h2 class="text-xl font-bold">2/3 (二)</h2>
-                    <span class="text-xs font-bold text-gray-400">Day 6</span>
+                    <span class="text-xs font-bold text-gray-500 bg-gray-100 px-3 py-1 rounded-full">Day 6</span>
                 </div>
-                <!-- 修正：移除 h-full，改用 flex-grow，這樣它會填滿卡片但不會超出 -->
-                <div class="bg-teal-50 p-4 rounded-lg border-l-4 border-place flex-grow">
-                    <h3 class="font-bold text-teal-800 mb-2">橫濱探索</h3>
-                    <div class="text-xs text-gray-500">*好好笑，這AI想的</div>
-                    <ul class="list-disc list-inside text-sm text-teal-700 space-y-2">
-                        <li>紅磚倉庫</li>
-                        <li>中華街</li>
-                        <li>鋼彈工廠</li>
-                        <li>港未來夜景</li>
+                <div class="bg-teal-50/50 p-4 rounded-xl border-l-4 border-place flex-grow hover:bg-teal-50 transition">
+                    <h3 class="font-bold text-teal-800 mb-2 text-lg">橫濱探索</h3>
+                    <div class="text-xs text-yellow-600 bg-yellow-50 px-2 py-1 rounded mb-3 inline-block border border-yellow-100">
+                        <i class="fas fa-smile-wink mr-1"></i> *好好笑，這AI想的
+                    </div>
+                    <ul class="space-y-2">
+                        <li class="flex items-center text-sm text-teal-700"><span class="w-1.5 h-1.5 bg-teal-400 rounded-full mr-2"></span> 紅磚倉庫</li>
+                        <li class="flex items-center text-sm text-teal-700"><span class="w-1.5 h-1.5 bg-teal-400 rounded-full mr-2"></span> 中華街</li>
+                        <li class="flex items-center text-sm text-teal-700"><span class="w-1.5 h-1.5 bg-teal-400 rounded-full mr-2"></span> 鋼彈工廠</li>
+                        <li class="flex items-center text-sm text-teal-700"><span class="w-1.5 h-1.5 bg-teal-400 rounded-full mr-2"></span> 港未來夜景</li>
                     </ul>
                 </div>
             </div>
 
             <!-- Desktop Day 7-8 -->
-            <div
-                class="bg-gray-100 rounded-xl shadow-sm p-5 day-column border-t-8 border-gray-400 opacity-75 h-full flex flex-col">
-                <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-xl font-bold text-gray-500">2/4 - 2/5</h2>
-                    <span class="text-xs font-bold text-gray-400">Free</span>
+            <div class="bg-gray-100/80 rounded-2xl shadow-none p-5 day-column border-t-8 border-gray-400 opacity-90 h-full flex flex-col animate-card delay-300">
+                <div class="flex justify-between items-center mb-4 pb-3 border-b border-gray-200">
+                    <h2 class="text-xl font-bold text-gray-600">2/4 - 2/5</h2>
+                    <span class="text-xs font-bold text-gray-500 bg-gray-200 px-3 py-1 rounded-full">Free</span>
                 </div>
-                <div class="text-center py-8 text-gray-400 flex-grow flex flex-col justify-center">
-                    <i class="fas fa-coffee text-3xl mb-3"></i>
-                    <p class="text-sm">橫濱自由活動</p>
-                    <p class="text-xs mt-1">Hilton Yokohama 設施</p>
+                <div class="text-center py-8 text-gray-500 flex-grow flex flex-col justify-center items-center">
+                    <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-sm mb-3">
+                        <i class="fas fa-coffee text-2xl text-gray-400"></i>
+                    </div>
+                    <p class="text-sm font-medium">橫濱自由活動</p>
+                    <p class="text-xs mt-1 text-gray-400">Hilton Yokohama 設施</p>
                 </div>
             </div>
 
             <!-- Desktop Day 9 -->
-            <div class="bg-white rounded-xl shadow-sm p-5 day-column border-t-8 border-gray-800 h-full flex flex-col">
-                <div class="flex justify-between items-center mb-4">
+            <div class="bg-white rounded-2xl shadow-sm p-5 day-column border-t-8 border-gray-800 h-full flex flex-col animate-card delay-400">
+                <div class="flex justify-between items-center mb-4 pb-3 border-b border-gray-100">
                     <h2 class="text-xl font-bold">2/6 (五)</h2>
-                    <span class="text-xs font-bold text-gray-400">Day 9</span>
+                    <span class="text-xs font-bold text-gray-500 bg-gray-100 px-3 py-1 rounded-full">Day 9</span>
                 </div>
-                <div class="bg-blue-50 p-3 rounded-lg border-l-4 border-flight">
-                    <div class="flex justify-between text-sm mb-1"><span class="font-bold text-flight">阿珍英國飛機</span>
-                        <span class="text-xs bg-white px-1 rounded">T3 ➔ T5</span>
-                    </div>
-                    <div class="flex justify-between items-center mt-2">
+                <div class="bg-blue-50/50 p-3 rounded-xl border-l-4 border-flight hover:bg-blue-50 transition">
+                    <div class="flex justify-between text-sm mb-1"><span class="font-bold text-flight">阿珍英國飛機</span> <span class="text-xs bg-white px-1.5 py-0.5 rounded text-blue-800 font-bold shadow-sm">T3 ➔ T5</span></div>
+                    <div class="flex justify-between items-center mt-3">
                         <div class="text-center">
-                            <div class="text-xs text-gray-500">HND</div>
-                            <div class="font-bold">13:15</div>
+                            <div class="text-xs text-gray-400 font-bold">HND</div>
+                            <div class="font-bold text-xl text-gray-800">13:15</div>
                         </div>
-                        <i class="fas fa-arrow-right text-gray-300"></i>
+                        
+                        <!-- 飛行路徑 -->
+                        <div class="flex-1 flex items-center justify-center px-3">
+                            <div class="h-0.5 w-full bg-gray-200 border-b border-dashed border-blue-200 relative">
+                                <i class="fas fa-plane text-blue-400 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-blue-50 px-1 text-sm"></i>
+                            </div>
+                        </div>
+
                         <div class="text-center">
-                            <div class="text-xs text-gray-500">LHR</div>
-                            <div class="font-bold">19:10</div>
+                            <div class="text-xs text-gray-400 font-bold">LHR</div>
+                            <div class="font-bold text-xl text-gray-800">19:10</div>
                         </div>
                     </div>
+                    <div class="text-right mt-2">
+                        <a href="https://maps.app.goo.gl/MeYskDvdBzzgAZRL7" target="_blank" class="map-btn text-flight border-blue-200 bg-white">
+                           <i class="fas fa-map-location-dot"></i> 地圖
+                       </a>
+                   </div>
                 </div>
-                <div class="mt-4 text-center text-xs text-gray-400 flex-grow flex items-end justify-center pb-1">
+                <div class="mt-4 text-center text-xs text-gray-400 flex-grow flex items-end justify-center pb-1 font-medium">
                     Safe Flight! ✈️
                 </div>
             </div>
 
         </main>
-
-        <footer class="text-center text-gray-400 text-sm mt-12 mb-4 no-print">
-            Made for Patricia & Jean
+        
+        <footer class="text-center text-gray-400 text-sm mt-16 mb-8 no-print font-light">
+            Made with ❤️ for Patricia & Jean
         </footer>
     </div>
 
-</body>
+    <!-- Script -->
+    <script>
+        function copyText(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                Swal.fire({
+                    icon: 'success',
+                    title: '已複製',
+                    text: '預約代號: ' + text,
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 2000,
+                    timerProgressBar: true
+                });
+            });
+        }
 
-</html>
+        function updateCountdown() {
+            const targetDate = new Date("2026-01-29T00:00:00").getTime();
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            if (distance < 0) {
+                document.getElementById("days").innerText = "0";
+                document.getElementById("hours").innerText = "0";
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+            document.getElementById("days").innerText = days;
+            document.getElementById("hours").innerText = hours;
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+    </script>
+</body>
+</html> 
